@@ -277,12 +277,13 @@ p + p { margin-top: 1em; }
   margin-right: -0.22em; /* keeps the letter-spaced title optically centered */
   text-shadow: 0 0 30px rgba(0, 0, 0, 0.9), 0 0 60px rgba(0, 0, 0, 0.8);
 }
+/* main text in index.html */
 .hero .tagline {
   color: var(--text);
   font-style: italic;
   font-size: 1.3rem;
   max-width: 520px;
-  margin: 18px auto 40px;
+  margin: 4px auto 40px;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
 }
 .hero .credit {

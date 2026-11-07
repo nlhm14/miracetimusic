@@ -326,7 +326,7 @@ p + p { margin-top: 1em; }
   color: var(--accent);
   margin-top: 18px;
 }
-.page-header p { color: var(--muted); margin-top: 14px; font-style: italic; }
+.page-header p { color: var(--muted); margin-top: 14px; font-style: italic; font-size: 1.5rem; }
 
 /* ---------- Sections ---------- */
 
@@ -340,8 +340,8 @@ p + p { margin-top: 1em; }
 .eyebrow {
   display: inline-block;
   font-family: var(--font-label);
-  font-size: 0.95rem;
-  letter-spacing: 0.3em;
+  font-size: 2rem;
+  letter-spacing: 0.2em;
   color: var(--rubric);
   margin-bottom: 10px;
 }

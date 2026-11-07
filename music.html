@@ -7,10 +7,10 @@
   <meta name="description" content="Listen to Mira Ceti: albums, EPs, singles and music videos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="page-music">
 
   <header class="site-header">
     <div class="container">
@@ -79,21 +79,21 @@
 
       <section class="section">
         <h2>Music videos</h2>
-        <!-- One block per video: replace the id after /embed/ with the id from the YouTube URL (youtube.com/watch?v=ID) -->
-        <h3>Sacrifice</h3>
-        <div class="embed video">
-          <iframe src="https://www.youtube-nocookie.com/embed/tEqfIdMgPi8" title="Mira Ceti - Sacrifice" loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <h3>Esker Mila</h3>
-        <div class="embed video">
-          <iframe src="https://www.youtube-nocookie.com/embed/GOSWvjBpHbA" title="Mira Ceti - Esker Mila" loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <h3>Uriat</h3>
-        <div class="embed video">
-          <iframe src="https://www.youtube-nocookie.com/embed/8VrZyoWwn10" title="Mira Ceti - Uriat" loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <!-- One <a> per video: the link is the YouTube URL, the image is the video's thumbnail
+             (add it to process_images.sh, output in images_processed/videos/). Clicking opens YouTube. -->
+        <div class="videos">
+          <a class="video-link" href="https://www.youtube.com/watch?v=tEqfIdMgPi8" target="_blank" rel="noopener">
+            <span class="thumb"><img src="images_processed/videos/sacrifice.jpg" alt="" loading="lazy"></span>
+            <span class="video-title">Sacrifice</span>
+          </a>
+          <a class="video-link" href="https://www.youtube.com/watch?v=GOSWvjBpHbA" target="_blank" rel="noopener">
+            <span class="thumb"><img src="images_processed/videos/esker-mila.jpg" alt="" loading="lazy"></span>
+            <span class="video-title">Esker Mila</span>
+          </a>
+          <a class="video-link" href="https://www.youtube.com/watch?v=8VrZyoWwn10" target="_blank" rel="noopener">
+            <span class="thumb"><img src="images_processed/videos/uriat.jpg" alt="" loading="lazy"></span>
+            <span class="video-title">Uriat</span>
+          </a>
         </div>
         <p><a href="https://www.youtube.com/@miraceti." target="_blank" rel="noopener">More on YouTube →</a></p>
       </section>

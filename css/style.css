@@ -1,24 +1,25 @@
 /* ==========================================================
-   Mira Ceti — site styles
+   Mira Ceti — site styles ("grimoire")
    Edit the colors and fonts in :root to restyle the whole site.
    ========================================================== */
 
 :root {
-  --bg: #07070a;          /* near-black */
-  --bg-alt: #0c0b10;
-  --surface: #111017;
-  --text: #ddd6c8;        /* bone white */
-  --muted: #8b8577;
-  --accent: #b39062;      /* tarnished gold */
-  --accent-2: #8e1f26;    /* dried red, from the Ament cover */
-  --border: rgba(221, 214, 200, 0.12);
+  --bg: #0b0906;          /* old ink, brown-black */
+  --bg-alt: #110e0a;
+  --surface: #16120c;
+  --text: #d9caa5;        /* parchment */
+  --muted: #8f7f60;       /* faded ink */
+  --accent: #c2a15a;      /* gold leaf */
+  --rubric: #a8342a;      /* red ink of manuscript capitals */
+  --border: rgba(194, 161, 90, 0.22);
 
-  --font-display: "Cormorant Garamond", Garamond, Georgia, serif;
-  --font-body: "EB Garamond", Garamond, Georgia, serif;
-  --font-label: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-display: "IM Fell English", Garamond, Georgia, serif;
+  --font-body: "IM Fell English", Garamond, Georgia, serif;
+  --font-label: "IM Fell English SC", Garamond, Georgia, serif;
+  --font-initial: "UnifrakturMaguntia", "IM Fell English", serif;
 
-  --max-width: 1080px;
-  --radius: 2px;
+  --max-width: 1040px;
+  --radius: 0;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,9 +27,12 @@
 html { scroll-behavior: smooth; }
 
 body {
+  /* candlelight from above, embers from below */
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(142, 31, 38, 0.10), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(194, 161, 90, 0.09), transparent 70%),
+    radial-gradient(ellipse 70% 40% at 50% 100%, rgba(168, 52, 42, 0.07), transparent 70%),
     var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 19px;
@@ -38,35 +42,61 @@ body {
   flex-direction: column;
 }
 
-/* Film grain over the whole site */
+/* Thin double frame around the page, like a printed book */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 10px;
+  border: 1px solid var(--border);
+  outline: 1px solid rgba(194, 161, 90, 0.1);
+  outline-offset: -6px;
+  pointer-events: none;
+  z-index: 99;
+}
+/* Paper grain */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.75  0 0 0 0 0.55  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+@media (max-width: 600px) {
+  body::before { inset: 5px; outline-offset: -4px; }
 }
 
-main { flex: 1; }
+main { flex: 1; counter-reset: chapter; }
 
 img, iframe { max-width: 100%; display: block; }
 
 a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
 a:hover { color: var(--text); }
 
-::selection { background: var(--accent-2); color: var(--text); }
+::selection { background: var(--rubric); color: var(--text); }
 
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
+  line-height: 1.15;
 }
-h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 300; }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1.2rem; font-style: italic; }
-h3 { font-size: 1.4rem; margin-bottom: 0.3rem; }
+h1 { font-size: clamp(2.6rem, 6.5vw, 4.6rem); }
+h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); margin-bottom: 1.2rem; font-style: italic; }
+h3 { font-size: 1.35rem; margin-bottom: 0.3rem; }
+
+/* Rubrication: each chapter heading gets a red Roman numeral */
+main h2::before {
+  counter-increment: chapter;
+  content: counter(chapter, upper-roman) ". ";
+  font-style: normal;
+  color: var(--rubric);
+}
+
+/* no chapter numerals on the Home, Music and Contact pages */
+.page-home main h2::before,
+.page-music main h2::before,
+.page-contact main h2::before { content: none; }
 
 p + p { margin-top: 1em; }
 
@@ -74,7 +104,7 @@ p + p { margin-top: 1em; }
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
 }
 
 /* ---------- Header / navigation ---------- */
@@ -83,8 +113,8 @@ p + p { margin-top: 1em; }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: linear-gradient(rgba(7, 7, 10, 0.95), rgba(7, 7, 10, 0.75));
-  backdrop-filter: blur(8px);
+  background: rgba(11, 9, 6, 0.92);
+  backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--border);
 }
 
@@ -92,15 +122,14 @@ p + p { margin-top: 1em; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: 74px;
 }
 
 .logo {
   font-family: var(--font-label);
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   color: var(--text);
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
+  letter-spacing: 0.25em;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -109,7 +138,7 @@ p + p { margin-top: 1em; }
 .logo::before {
   content: "✦";
   color: var(--accent);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 0;
   animation: pulse 6s ease-in-out infinite;
 }
@@ -122,23 +151,19 @@ p + p { margin-top: 1em; }
 
 .nav-links {
   display: flex;
-  gap: 26px;
+  gap: 24px;
   list-style: none;
 }
 .nav-links a {
   font-family: var(--font-label);
   color: var(--muted);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
 }
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { color: var(--text); }
-.nav-links a[aria-current="page"]::before {
-  content: "✦ ";
-  color: var(--accent);
-  font-size: 0.6rem;
-}
+.nav-links a[aria-current="page"]::before { content: "☽ "; color: var(--accent); }
+.nav-links a[aria-current="page"]::after  { content: " ☾"; color: var(--accent); }
 
 .nav-toggle {
   display: none;
@@ -149,12 +174,12 @@ p + p { margin-top: 1em; }
   cursor: pointer;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .nav-toggle { display: block; }
   .nav-links {
     display: none;
     position: absolute;
-    top: 72px;
+    top: 74px;
     left: 0;
     right: 0;
     flex-direction: column;
@@ -166,7 +191,7 @@ p + p { margin-top: 1em; }
   .nav-links.open { display: flex; }
   .nav-links a {
     display: block;
-    padding: 18px 24px;
+    padding: 16px 24px;
     border-top: 1px solid var(--border);
   }
 }
@@ -175,30 +200,30 @@ p + p { margin-top: 1em; }
 
 .hero {
   position: relative;
-  min-height: calc(100vh - 72px);
+  min-height: calc(100vh - 74px);
   display: flex;
   align-items: center;
   text-align: center;
   overflow: hidden;
   background: var(--bg);
 }
-/* The photo: darkened, partly desaturated, drifting very slowly */
+/* The photo (Eindhoven, 29 Mar 2026): sepia, very dark, drifting slowly */
 .hero::before {
   content: "";
   position: absolute;
   inset: -4%;
   background: url("../images_processed/live/2026-03-29-eindhoven-1.jpg") center 30% / cover;
-  filter: grayscale(0.45) brightness(0.45) contrast(1.15);
+  filter: sepia(0.7) brightness(0.32) contrast(1.2);
   animation: drift 40s ease-in-out infinite alternate;
 }
-/* Vignette: the edges dissolve into black */
+/* Vignette: the edges dissolve into ink */
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at center, transparent 20%, rgba(7, 7, 10, 0.85) 75%),
-    linear-gradient(transparent 60%, var(--bg));
+    radial-gradient(ellipse at center, transparent 15%, rgba(11, 9, 6, 0.9) 72%),
+    linear-gradient(transparent 65%, var(--bg));
 }
 .hero > * { position: relative; z-index: 1; }
 
@@ -207,58 +232,107 @@ p + p { margin-top: 1em; }
   to   { transform: scale(1.08) translate(-1.5%, -1%); }
 }
 
+/* The constellation of Cetus behind the title, very faint.
+   Real star positions; Mira (the variable star) slowly brightens and fades. */
+.hero .constellation {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: min(1100px, 96vw);
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.constellation .s path { fill: var(--text); }
+.constellation .c-mira path { fill: var(--accent); }
+.constellation .halo { filter: blur(3px); }
+.constellation .s .halo { fill: var(--text); opacity: 0.35; }
+.constellation .c-mira .halo { fill: var(--accent); opacity: 0.45; filter: blur(6px); }
+/* soft glow around every star */
+.constellation .s,
+.constellation .c-mira { filter: drop-shadow(0 0 2px rgba(255, 244, 220, 0.6)) drop-shadow(0 0 7px rgba(217, 202, 165, 0.3)); }
+/* each star shines steadily, then blinks: a quick flare and a dip */
+.constellation .s {
+  opacity: 0.55;
+  animation: blink 7s ease-in-out infinite;
+}
+/* Mira brightens and swells, then fades: a variable star */
+.constellation .c-mira { animation: mira 11s ease-in-out infinite; }
+@keyframes blink {
+  0%, 40%, 100% { opacity: 0.55; transform: scale(1); }
+  46%           { opacity: 0.85; transform: scale(1.15); }
+  52%           { opacity: 0.25; transform: scale(0.9); }
+  60%           { opacity: 0.55; transform: scale(1); }
+}
+@keyframes mira {
+  0%, 100% { opacity: 0.4;  transform: scale(0.85); }
+  50%      { opacity: 0.9;  transform: scale(1.1); }
+}
+.hero .container { z-index: 2; }
+
 .hero h1 {
   font-family: var(--font-label);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  margin-right: -0.3em; /* keeps the letter-spaced title optically centered */
-  text-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.22em;
+  margin-right: -0.22em; /* keeps the letter-spaced title optically centered */
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.9), 0 0 60px rgba(0, 0, 0, 0.8);
 }
 .hero .tagline {
   color: var(--text);
-  opacity: 0.75;
-  font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.35rem;
-  max-width: 560px;
-  margin: 22px auto 40px;
+  font-size: 1.3rem;
+  max-width: 520px;
+  margin: 18px auto 40px;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
 }
 .hero .credit {
   position: absolute;
-  right: 16px;
-  bottom: 12px;
-  font-size: 0.7rem;
+  z-index: 2;
+  right: 24px;
+  bottom: 18px;
+  font-size: 0.72rem;
+  font-style: italic;
   color: var(--muted);
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 /* ---------- Page header (inner pages) ---------- */
 
 .page-header {
-  padding: 96px 0 40px;
+  padding: 28px 0 36px;
   margin-bottom: 56px;
   text-align: center;
+  position: relative;
 }
-.page-header h1::after {
-  content: "✦";
+/* the Mira Ceti logo above each page title, in the text color
+   (the PNG is used as a stencil: change the color with background-color) */
+.page-header::before {
+  content: "";
   display: block;
-  font-size: 0.9rem;
+  width: 120px;
+  height: 200px;
+  margin: 0 auto 10px;
+  background-color: var(--text);
+  -webkit-mask: url("../images_processed/logo.png") center / contain no-repeat;
+          mask: url("../images_processed/logo.png") center / contain no-repeat;
+  opacity: 0.9;
+}
+.page-header h1 { font-family: var(--font-label); letter-spacing: 0.12em; }
+.page-header h1::after {
+  content: "☽ ✦ ☾";
+  display: block;
+  font-size: 0.85rem;
+  letter-spacing: 0.5em;
   color: var(--accent);
-  margin-top: 22px;
-  opacity: 0.8;
+  margin-top: 18px;
 }
-.page-header p {
-  color: var(--muted);
-  margin-top: 16px;
-  font-style: italic;
-}
+.page-header p { color: var(--muted); margin-top: 14px; font-style: italic; }
 
 /* ---------- Sections ---------- */
 
 .section { padding: 80px 0; }
 .section-alt {
-  background: var(--bg-alt);
+  background: rgba(22, 18, 12, 0.6);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -266,37 +340,36 @@ p + p { margin-top: 1em; }
 .eyebrow {
   display: inline-block;
   font-family: var(--font-label);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.35em;
-  color: var(--accent);
-  margin-bottom: 14px;
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  color: var(--rubric);
+  margin-bottom: 10px;
 }
+.hero .eyebrow { color: var(--accent); }
+.eyebrow::before, .eyebrow::after { content: " ✦ "; color: var(--accent); font-size: 0.7em; }
 
 /* ---------- Buttons ---------- */
 
 .btn {
   display: inline-block;
-  padding: 13px 30px;
-  border-radius: var(--radius);
+  padding: 12px 28px;
   font-family: var(--font-label);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  border: 1px solid var(--accent);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  border: 3px double var(--accent);
   transition: background 0.4s, color 0.4s, box-shadow 0.4s;
 }
-.btn-primary { background: rgba(179, 144, 98, 0.12); color: var(--text); }
-.btn-primary:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 30px rgba(179, 144, 98, 0.35); }
+.btn-primary { background: rgba(194, 161, 90, 0.1); color: var(--text); }
+.btn-primary:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 30px rgba(194, 161, 90, 0.35); }
 .btn-outline { color: var(--accent); margin-left: 10px; border-color: var(--border); }
-.btn-outline:hover { color: var(--text); border-color: var(--accent); box-shadow: 0 0 24px rgba(179, 144, 98, 0.2); }
+.btn-outline:hover { color: var(--text); border-color: var(--accent); box-shadow: 0 0 24px rgba(194, 161, 90, 0.2); }
 
 /* ---------- Grids & cards ---------- */
 
 .grid {
   display: grid;
-  gap: 48px 32px;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 52px 36px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .card { text-align: center; }
@@ -304,92 +377,146 @@ p + p { margin-top: 1em; }
 .card .meta {
   font-family: var(--font-label);
   color: var(--muted);
-  font-size: 0.68rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
 }
-.card a {
-  font-family: var(--font-label);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+.card a { font-family: var(--font-label); font-size: 0.95rem; letter-spacing: 0.08em; }
+
+/* Images framed like engraved plates: double rule, sepia ink, color on hover */
+.cover, .gallery img, .portrait {
+  border: 1px solid var(--border);
+  outline: 1px solid rgba(194, 161, 90, 0.35);
+  outline-offset: 5px;
+  filter: sepia(0.45) brightness(0.8) contrast(1.05);
+  transition: filter 0.9s ease;
 }
+.card:hover .cover, .gallery figure:hover img, .portrait:hover { filter: none; }
 
 .cover {
   aspect-ratio: 1 / 1;
-  margin-bottom: 20px;
+  margin: 6px 6px 24px;
+  width: calc(100% - 12px);
   object-fit: cover;
-  width: 100%;
-  border: 1px solid var(--border);
   background: var(--surface);
-}
-
-/* Images are dimmed a little and come to life on hover */
-.cover, .gallery img, .portrait {
-  filter: grayscale(0.3) brightness(0.85);
-  transition: filter 0.8s ease;
-}
-.card:hover .cover, .gallery figure:hover img, .portrait:hover {
-  filter: none;
 }
 
 .embed {
   overflow: hidden;
   margin-bottom: 24px;
-  border: 1px solid var(--border);
+  border: 3px double var(--border);
 }
 .embed iframe { width: 100%; border: 0; }
 .video { aspect-ratio: 16 / 9; }
 .video iframe { height: 100%; }
 .video + h3, .embed + h3 { margin-top: 48px; }
 
+/* Music videos: thumbnail + play sign, opens the video on YouTube */
+.videos {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  margin-bottom: 32px;
+}
+.video-link {
+  display: block;
+  padding: 6px;
+  color: var(--text);
+}
+.video-link .thumb { position: relative; display: block; }
+.video-link img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  outline: 1px solid rgba(194, 161, 90, 0.35);
+  outline-offset: 5px;
+  filter: sepia(0.45) brightness(0.65) contrast(1.05);
+  transition: filter 0.9s ease;
+}
+/* play sign in the middle of the thumbnail */
+.video-link .thumb::before {
+  content: "▶";
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  padding-left: 4px;
+  border: 1px solid rgba(217, 202, 165, 0.7);
+  border-radius: 50%;
+  background: rgba(11, 9, 6, 0.45);
+  font-size: 1.1rem;
+  color: var(--text);
+  transition: background 0.5s, box-shadow 0.5s;
+}
+.video-link:hover img { filter: none; }
+.video-link:hover .thumb::before { background: rgba(194, 161, 90, 0.35); box-shadow: 0 0 24px rgba(194, 161, 90, 0.4); }
+.video-title {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
 .lead { color: var(--muted); font-style: italic; margin: -10px 0 24px; }
 
-/* ---------- Live gallery ---------- */
+/* ---------- Live gallery: numbered plates ---------- */
 
 .gallery {
-  columns: 3 280px;
-  column-gap: 16px;
+  columns: 3 270px;
+  column-gap: 28px;
+  counter-reset: plate;
 }
 .gallery figure {
   break-inside: avoid;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+  padding: 6px;
 }
 .gallery img { width: 100%; }
 .gallery figcaption {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-style: italic;
-  margin-top: 8px;
+  margin-top: 14px;
+  text-align: center;
+}
+.gallery figcaption::before {
+  counter-increment: plate;
+  content: "Plate " counter(plate, upper-roman) ". ";
+  font-family: var(--font-label);
+  font-style: normal;
+  color: var(--rubric);
 }
 
 /* ---------- Concerts list ---------- */
 
-.events { list-style: none; border-top: 1px solid var(--border); }
+.events { list-style: none; border-top: 3px double var(--border); }
 .event {
   display: grid;
   grid-template-columns: 100px 1fr auto;
   gap: 24px;
   align-items: center;
-  padding: 24px 0;
+  padding: 22px 0;
   border-bottom: 1px solid var(--border);
   transition: background 0.4s;
 }
-.event:hover { background: linear-gradient(90deg, transparent, rgba(179, 144, 98, 0.05), transparent); }
-.event-date {
-  text-align: center;
-  font-family: var(--font-display);
-  line-height: 1.1;
-}
-.event-date .day { font-size: 2.3rem; font-weight: 300; display: block; }
+.event:hover { background: linear-gradient(90deg, transparent, rgba(194, 161, 90, 0.06), transparent); }
+.event-date { text-align: center; line-height: 1.1; }
+.event-date .day { font-family: var(--font-display); font-size: 2.3rem; display: block; }
 .event-date .day.range { font-size: 1.5rem; }
 .event-date .month {
   font-family: var(--font-label);
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--rubric);
 }
 .event-info h3 { margin-bottom: 2px; }
 .event-info p { color: var(--muted); font-size: 0.95rem; font-style: italic; }
@@ -408,13 +535,19 @@ p + p { margin-top: 1em; }
   gap: 64px;
   align-items: start;
 }
-.about-photos { display: grid; gap: 32px; }
-.about-photos figcaption { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 8px; }
-.portrait {
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  width: 100%;
-  border: 1px solid var(--border);
+.about-photos { display: grid; gap: 40px; padding: 6px; }
+.about-photos figcaption { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-top: 14px; text-align: center; }
+.portrait { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+
+/* Illuminated initial on the first paragraph of the biography */
+.about h2 + p::first-letter {
+  font-family: var(--font-initial);
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.8;
+  margin: 0.08em 0.1em 0 0;
+  color: var(--rubric);
+  text-shadow: 0 0 1px var(--accent);
 }
 @media (max-width: 760px) {
   .about { grid-template-columns: 1fr; gap: 40px; }
@@ -425,48 +558,53 @@ p + p { margin-top: 1em; }
 .email {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+  font-size: clamp(1.5rem, 4.5vw, 2.5rem);
   word-break: break-word;
   text-align: center;
 }
 
-/* ---------- Press quotes ---------- */
+/* ---------- Press quotes: numbered testimonies ---------- */
 
 .quotes {
   columns: 2 420px;
   column-gap: 56px;
+  counter-reset: testimony;
 }
 .quote {
   break-inside: avoid;
-  padding: 8px 0 8px 28px;
-  border-left: 1px solid var(--accent);
+  position: relative;
+  padding: 4px 0 4px 34px;
+  border-left: 1px solid var(--border);
   margin-bottom: 56px;
 }
-.quote blockquote {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.35rem;
-  line-height: 1.5;
-}
-.quote .translation {
-  color: var(--muted);
-  font-size: 0.92rem;
-  margin-top: 12px;
-}
-.quote figcaption {
-  margin-top: 16px;
+.quote::before {
+  counter-increment: testimony;
+  content: counter(testimony, upper-roman);
+  position: absolute;
+  left: -1px;
+  top: 0;
+  transform: translateX(-50%);
+  background: var(--bg);
+  padding: 4px 0;
+  font-family: var(--font-label);
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--rubric);
 }
+.quote blockquote {
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.55;
+}
+.quote .translation { color: var(--muted); font-size: 0.92rem; margin-top: 12px; }
+.quote figcaption { margin-top: 16px; font-size: 0.9rem; color: var(--muted); }
 .quote figcaption strong {
   font-family: var(--font-label);
   font-weight: 400;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
   color: var(--text);
 }
-.quote figcaption a { margin-left: 10px; }
+.quote figcaption a { margin-left: 10px; font-style: italic; }
 
 /* ---------- Social links ---------- */
 
@@ -476,22 +614,17 @@ p + p { margin-top: 1em; }
   gap: 24px;
   list-style: none;
 }
-.socials a {
-  font-family: var(--font-label);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+.socials a { font-family: var(--font-label); font-size: 0.95rem; letter-spacing: 0.12em; color: var(--muted); }
 .socials a:hover { color: var(--accent); }
 
 /* ---------- Footer ---------- */
 
 .site-footer {
-  border-top: 1px solid var(--border);
-  padding: 40px 0;
+  border-top: 3px double var(--border);
+  padding: 32px 0 44px;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-style: italic;
 }
 .site-footer .container {
   display: flex;
@@ -499,6 +632,46 @@ p + p { margin-top: 1em; }
   gap: 16px;
   justify-content: space-between;
   align-items: center;
+}
+.site-footer .container::before {
+  content: "☽ ✦ ☾";
+  flex-basis: 100%;
+  text-align: center;
+  color: var(--accent);
+  letter-spacing: 0.5em;
+  font-style: normal;
+  margin-bottom: 12px;
+}
+
+/* ---------- Little stars scattered in the background (added by js/main.js) ---------- */
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.starfield span {
+  position: absolute;
+  color: var(--text);
+  line-height: 1;
+  text-shadow: 0 0 3px rgba(255, 244, 220, 0.6), 0 0 8px rgba(217, 202, 165, 0.3);
+  animation: blink-star 7s ease-in-out infinite;
+}
+.starfield .dot {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 3px 1px rgba(255, 244, 220, 0.45);
+}
+/* steady, then a quick flare and a dip */
+@keyframes blink-star {
+  0%, 40%, 100% { opacity: var(--o, 0.4); transform: scale(1); }
+  46%           { opacity: 0.8;           transform: scale(1.25); }
+  52%           { opacity: 0.05;          transform: scale(0.8); }
+  62%           { opacity: var(--o, 0.4); transform: scale(1); }
 }
 
 /* ---------- Slow fade-in on scroll (set up by js/main.js) ---------- */

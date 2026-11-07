@@ -551,6 +551,8 @@ p + p { margin-top: 1em; }
   word-break: break-word;
   text-align: center;
 }
+.email-label { display: block; text-align: center; margin-top: 40px; }
+.email-label:first-of-type { margin-top: 0; }
 
 /* ---------- Press quotes: numbered testimonies ---------- */
 

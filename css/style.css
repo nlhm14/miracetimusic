@@ -538,17 +538,12 @@ p + p { margin-top: 1em; }
 .about-photos { display: grid; gap: 40px; padding: 6px; }
 .about-photos figcaption { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-top: 14px; text-align: center; }
 .portrait { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+/* Landscape portrait (n.hir): keep the photo's own shape */
+.portrait-wide { aspect-ratio: auto; }
 
-/* Illuminated initial on the first paragraph of the biography */
-.about h2 + p::first-letter {
-  font-family: var(--font-initial);
-  float: left;
-  font-size: 4.6em;
-  line-height: 0.8;
-  margin: 0.08em 0.1em 0 0;
-  color: var(--rubric);
-  text-shadow: 0 0 1px var(--accent);
-}
+/* n.hir row: photo on the left, text vertically centred on it */
+.about-nhir { margin-top: 72px; align-items: center; }
+.about-cta { text-align: center; margin-top: 64px; }
 @media (max-width: 760px) {
   .about { grid-template-columns: 1fr; gap: 40px; }
 }

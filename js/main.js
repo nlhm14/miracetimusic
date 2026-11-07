@@ -18,3 +18,24 @@ document.querySelectorAll(".event[data-date]").forEach((el) => {
 document.querySelectorAll(".year").forEach((el) => {
   el.textContent = new Date().getFullYear();
 });
+
+// Slow fade-in of content as it scrolls into view.
+// Content stays visible if JavaScript is off or the browser is too old.
+if ("IntersectionObserver" in window) {
+  document.documentElement.classList.add("js");
+  const targets = document.querySelectorAll(
+    ".hero .container, .page-header, .section h2, .card, .event, .gallery figure, .quote, .about > *, .embed, .email"
+  );
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  targets.forEach((el) => {
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+}

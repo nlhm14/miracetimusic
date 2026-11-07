@@ -340,7 +340,7 @@ p + p { margin-top: 1em; }
 .eyebrow {
   display: inline-block;
   font-family: var(--font-label);
-  font-size: 2rem;
+  font-size: 1.75rem;
   letter-spacing: 0.2em;
   color: var(--rubric);
   margin-bottom: 10px;

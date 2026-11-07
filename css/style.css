@@ -1,0 +1,395 @@
+/* ==========================================================
+   Mira Ceti — site styles
+   Edit the colors and fonts in :root to restyle the whole site.
+   ========================================================== */
+
+:root {
+  --bg: #0e0d12;
+  --bg-alt: #17151e;
+  --surface: #1e1b27;
+  --text: #ece8f2;
+  --muted: #a39cb3;
+  --accent: #e0a458;      /* main highlight color */
+  --accent-2: #c96f8f;    /* secondary highlight */
+  --border: #2c2838;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  --max-width: 1100px;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1; }
+
+img, iframe { max-width: 100%; display: block; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); }
+h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 1rem; }
+h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+
+p + p { margin-top: 1em; }
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- Header / navigation ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(14, 13, 18, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.logo:hover { text-decoration: none; color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-links a[aria-current="page"] {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 3px;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    display: block;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-links a[aria-current="page"] { border-bottom: 0; color: var(--accent); }
+}
+
+/* ---------- Hero (home page) ---------- */
+
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  /* Background photo, darkened so the text stays readable */
+  background:
+    linear-gradient(90deg, rgba(14, 13, 18, 0.9) 0%, rgba(14, 13, 18, 0.55) 55%, rgba(14, 13, 18, 0.3) 100%),
+    url("../images_processed/live/2026-03-29-eindhoven-1.jpg") center 30% / cover,
+    var(--bg);
+}
+.hero .credit {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---------- Live gallery ---------- */
+
+.gallery {
+  columns: 3 280px;
+  column-gap: 16px;
+}
+.gallery figure {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+.gallery img {
+  width: 100%;
+  border-radius: 6px;
+}
+.gallery figcaption {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 6px;
+}
+.hero .tagline {
+  color: var(--muted);
+  font-size: 1.2rem;
+  max-width: 560px;
+  margin: 18px 0 32px;
+}
+
+/* ---------- Page header (inner pages) ---------- */
+
+.page-header {
+  padding: 72px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+.page-header p { color: var(--muted); margin-top: 10px; }
+
+/* ---------- Sections ---------- */
+
+.section { padding: 64px 0; }
+.section-alt { background: var(--bg-alt); }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 2px solid var(--accent);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary:hover { background: transparent; color: var(--accent); text-decoration: none; }
+.btn-outline { color: var(--accent); margin-left: 10px; }
+.btn-outline:hover { background: var(--accent); color: var(--bg); text-decoration: none; }
+
+/* ---------- Grids & cards ---------- */
+
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.card .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
+
+.cover {
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  object-fit: cover;
+  width: 100%;
+}
+
+.embed {
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.embed iframe { width: 100%; border: 0; }
+.video { aspect-ratio: 16 / 9; }
+.video iframe { height: 100%; }
+
+/* ---------- Concerts list ---------- */
+
+.events { list-style: none; }
+.event {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.event-date {
+  text-align: center;
+  font-family: var(--font-display);
+  line-height: 1.1;
+}
+.event-date .day { font-size: 2rem; display: block; }
+.event-date .month {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.event-info h3 { margin-bottom: 2px; }
+.event-info p { color: var(--muted); font-size: 0.95rem; }
+.event.past { opacity: 0.55; }
+
+@media (max-width: 560px) {
+  .event { grid-template-columns: 70px 1fr; }
+  .event .btn { grid-column: 2; justify-self: start; }
+}
+
+/* ---------- About ---------- */
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 48px;
+  align-items: start;
+}
+.portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--accent-2), var(--surface));
+  object-fit: cover;
+  width: 100%;
+}
+@media (max-width: 760px) {
+  .about { grid-template-columns: 1fr; }
+}
+
+/* ---------- Contact ---------- */
+
+.email {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  word-break: break-word;
+}
+
+/* ---------- Social links ---------- */
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+}
+.socials a {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.socials a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.site-footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lead { color: var(--muted); margin: -6px 0 20px; }
+.video + h3, .embed + h3 { margin-top: 32px; }
+.event-date .day.range { font-size: 1.35rem; }
+.about-photos { display: grid; gap: 24px; }
+.about-photos figcaption { color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
+
+/* ---------- Press quotes ---------- */
+
+.quotes {
+  columns: 2 420px;
+  column-gap: 24px;
+}
+.quote {
+  break-inside: avoid;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.quote blockquote {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+.quote .translation {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 10px;
+}
+.quote figcaption {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.quote figcaption strong { color: var(--text); }
+.quote figcaption a { margin-left: 8px; }

@@ -383,15 +383,12 @@ p + p { margin-top: 1em; }
 }
 .card a { font-family: var(--font-label); font-size: 0.95rem; letter-spacing: 0.08em; }
 
-/* Images framed like engraved plates: double rule, sepia ink, color on hover */
+/* Images framed like engraved plates: double rule */
 .cover, .gallery img, .portrait {
   border: 1px solid var(--border);
   outline: 1px solid rgba(194, 161, 90, 0.35);
   outline-offset: 5px;
-  filter: sepia(0.45) brightness(0.8) contrast(1.05);
-  transition: filter 0.9s ease;
 }
-.card:hover .cover, .gallery figure:hover img, .portrait:hover { filter: none; }
 
 .cover {
   aspect-ratio: 1 / 1;
@@ -431,8 +428,6 @@ p + p { margin-top: 1em; }
   border: 1px solid var(--border);
   outline: 1px solid rgba(194, 161, 90, 0.35);
   outline-offset: 5px;
-  filter: sepia(0.45) brightness(0.65) contrast(1.05);
-  transition: filter 0.9s ease;
 }
 /* play sign in the middle of the thumbnail */
 .video-link .thumb::before {
@@ -454,7 +449,6 @@ p + p { margin-top: 1em; }
   color: var(--text);
   transition: background 0.5s, box-shadow 0.5s;
 }
-.video-link:hover img { filter: none; }
 .video-link:hover .thumb::before { background: rgba(194, 161, 90, 0.35); box-shadow: 0 0 24px rgba(194, 161, 90, 0.4); }
 .video-title {
   display: block;

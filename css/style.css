@@ -122,6 +122,7 @@ p + p { margin-top: 1em; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 32px;
   height: 74px;
 }
 
@@ -133,6 +134,7 @@ p + p { margin-top: 1em; }
   display: flex;
   align-items: center;
   gap: 12px;
+  white-space: nowrap;
 }
 /* Mira Ceti is a variable star: the logo star slowly brightens and fades */
 .logo::before {
@@ -151,19 +153,35 @@ p + p { margin-top: 1em; }
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  gap: 22px;
   list-style: none;
 }
 .nav-links a {
   font-family: var(--font-label);
   color: var(--muted);
   font-size: 0.95rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 .nav-links a:hover,
 .nav-links a[aria-current="page"] { color: var(--text); }
 .nav-links a[aria-current="page"]::before { content: "☽ "; color: var(--accent); }
 .nav-links a[aria-current="page"]::after  { content: " ☾"; color: var(--accent); }
+
+/* EN · FR language switch (top right) */
+.nav-links { order: 1; margin-left: auto; }
+.lang-switch {
+  order: 2;
+  display: flex;
+  gap: 10px;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+}
+.lang-switch a { color: var(--muted); }
+.lang-switch a + a::before { content: "·"; margin-right: 10px; color: var(--border); }
+.lang-switch a:hover { color: var(--text); }
+.lang-switch a[aria-current="true"] { color: var(--accent); }
 
 .nav-toggle {
   display: none;
@@ -174,8 +192,9 @@ p + p { margin-top: 1em; }
   cursor: pointer;
 }
 
-@media (max-width: 960px) {
-  .nav-toggle { display: block; }
+@media (max-width: 1140px) {
+  .nav-toggle { display: block; order: 3; margin-left: -16px; }
+  .lang-switch { margin-left: auto; }
   .nav-links {
     display: none;
     position: absolute;

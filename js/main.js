@@ -102,6 +102,10 @@ if ("IntersectionObserver" in window) {
     .sort((a, b) => (a.dataset.order ?? 0) - (b.dataset.order ?? 0));
   if (!figures.length || !window.HTMLDialogElement) return;
 
+  const fr = document.documentElement.lang === "fr";
+  const t = fr
+    ? { close: "Fermer", prev: "Photo précédente", next: "Photo suivante" }
+    : { close: "Close", prev: "Previous photo", next: "Next photo" };
   const box = document.createElement("dialog");
   box.className = "lightbox";
   box.innerHTML = `
@@ -109,9 +113,9 @@ if ("IntersectionObserver" in window) {
       <img alt="">
       <figcaption></figcaption>
     </figure>
-    <button class="lb-close" aria-label="Close">×</button>
-    <button class="lb-prev" aria-label="Previous photo">‹</button>
-    <button class="lb-next" aria-label="Next photo">›</button>`;
+    <button class="lb-close" aria-label="${t.close}">×</button>
+    <button class="lb-prev" aria-label="${t.prev}">‹</button>
+    <button class="lb-next" aria-label="${t.next}">›</button>`;
   document.body.appendChild(box);
   const img = box.querySelector("img");
   const caption = box.querySelector("figcaption");

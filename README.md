@@ -1,13 +1,11 @@
 # miracetimusic.com
 
-Static website for Mira Ceti, hosted on GitHub Pages.
-
 ## Preview locally
-    python3 -m http.server 8000
+    uv run --no-project python -m http.server 8000
 then open http://localhost:8000
 
 ## Publish
-    git add -A && git commit -m "Update site" && git push
+    git push
 
 ## Where to edit
 - Pages: `index.html`, `music.html`, `concerts.html`, `about.html`, `contact.html`

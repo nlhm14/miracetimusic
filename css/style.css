@@ -283,7 +283,7 @@ p + p { margin-top: 1em; }
   font-style: italic;
   font-size: 1.3rem;
   max-width: 520px;
-  margin: 4px auto 40px;
+  margin: 0 auto 40px;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
 }
 .hero .credit {
@@ -347,7 +347,7 @@ p + p { margin-top: 1em; }
   color: var(--rubric);
   margin-bottom: 10px;
 }
-.hero .eyebrow { color: var(--accent); }
+.hero .eyebrow { color: var(--accent); display: block; line-height: 1.2; margin-bottom: 0; }
 .eyebrow::before, .eyebrow::after { content: " ✦ "; color: var(--accent); font-size: 0.7em; }
 
 /* ---------- Buttons ---------- */

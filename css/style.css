@@ -366,7 +366,7 @@ p + p { margin-top: 1em; }
   color: var(--rubric);
   margin-bottom: 10px;
 }
-.hero .eyebrow { color: var(--accent); display: block; line-height: 1.2; margin-bottom: 0; }
+.hero .eyebrow { color: var(--accent); display: block; line-height: 1.2; margin-top: 16px; margin-bottom: 0; }
 .eyebrow::before, .eyebrow::after { content: " ✦ "; color: var(--accent); font-size: 0.7em; }
 
 /* ---------- Buttons ---------- */

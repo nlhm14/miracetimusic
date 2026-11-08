@@ -179,7 +179,7 @@ p + p { margin-top: 1em; }
   letter-spacing: 0.12em;
 }
 .lang-switch a { color: var(--muted); }
-.lang-switch a + a::before { content: "·"; margin-right: 10px; color: var(--border); }
+.lang-switch .sep { color: var(--muted); opacity: 0.5; }
 .lang-switch a:hover { color: var(--text); }
 .lang-switch a[aria-current="true"] { color: var(--accent); }
 
